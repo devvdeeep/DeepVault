@@ -283,7 +283,6 @@ body::before{
   display:flex;flex-direction:column;
   transition:transform .28s var(--ease),border-color .28s,box-shadow .28s;
   position:relative;
-  cursor:pointer;
 }
 .game-card::before{
   content:'';position:absolute;inset:0;
@@ -302,11 +301,12 @@ body::before{
   height:200px;display:flex;align-items:center;justify-content:center;
   font-size:72px;position:relative;overflow:hidden;flex-shrink:0;
 }
-.card-art img{
-  width:100%;height:100%;object-fit:cover;position:absolute;inset:0;
+.card-art-inner{
+  position:absolute;inset:0;display:flex;
+  align-items:center;justify-content:center;font-size:72px;
   transition:transform .35s var(--ease);
 }
-.game-card:hover .card-art img{transform:scale(1.08)}
+.game-card:hover .card-art-inner{transform:scale(1.08)}
 .card-art::after{
   content:'';position:absolute;inset:0;
   background:linear-gradient(to bottom,transparent 50%,var(--card));
@@ -440,63 +440,6 @@ footer{
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ── MODAL ────────────────────────────────────────────────── */
-.modal-overlay{
-  position:fixed;inset:0;z-index:9998;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
-  display:none;align-items:center;justify-content:center;
-  padding:24px;animation:fadeIn .25s var(--ease);
-}
-.modal-overlay.active{display:flex}
-.modal{
-  background:var(--panel);border:1px solid var(--rim2);
-  border-radius:var(--r-lg);max-width:640px;width:100%;
-  max-height:90vh;overflow-y:auto;
-  box-shadow:0 32px 80px rgba(0,0,0,.7);
-  animation:slideUp .3s var(--ease);
-  position:relative;
-}
-.modal-close{
-  position:absolute;top:16px;right:20px;
-  background:var(--surface);border:1px solid var(--rim);
-  border-radius:50%;width:36px;height:36px;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--t2);font-size:22px;font-weight:300;cursor:pointer;
-  transition:background .2s,border-color .2s,color .2s;
-  z-index:3;
-}
-.modal-close:hover{background:var(--red);border-color:var(--red);color:#fff}
-.modal-cover{
-  width:100%;height:280px;background:var(--card);position:relative;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-}
-.modal-cover img{
-  width:100%;height:100%;object-fit:cover;
-}
-.modal-cover .fallback-emoji{
-  font-size:72px;opacity:.4;
-}
-.modal-body{padding:24px 28px 28px}
-.modal-genre{
-  font-size:12px;font-weight:600;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:4px;
-}
-.modal-title{font-family:var(--font-hud);font-size:24px;font-weight:900;margin-bottom:6px;letter-spacing:-.5px}
-.modal-rating{
-  display:flex;align-items:center;gap:6px;color:var(--gold);font-size:16px;font-weight:600;margin-bottom:12px;
-}
-.modal-desc{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:22px}
-.modal-steam{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--cyan);color:var(--void);
-  font-family:var(--font-ui);font-size:16px;font-weight:700;
-  padding:12px 30px;border-radius:var(--r);
-  transition:transform .2s var(--ease),box-shadow .2s;
-}
-.modal-steam:hover{transform:translateY(-2px);box-shadow:0 0 32px var(--cyan-glow)}
-
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media(max-width:1024px){
   .hero-inner{grid-template-columns:1fr}
@@ -515,8 +458,6 @@ footer{
   .footer-grid{grid-template-columns:1fr}
   .stats-strip{grid-template-columns:1fr 1fr}
   .section{padding:52px clamp(16px,4vw,32px)}
-  .modal{max-width:100%;margin:0 12px}
-  .modal-cover{height:200px}
 }
 @media(max-width:480px){
   .games-grid{grid-template-columns:1fr}
@@ -524,7 +465,6 @@ footer{
   .btn-primary,.btn-secondary{width:100%;text-align:center}
   .stats-strip{grid-template-columns:1fr}
   .footer-bottom{flex-direction:column;text-align:center}
-  .modal-cover{height:160px}
 }
 </style>
 </head>
@@ -598,4 +538,403 @@ footer{
         </div>
         <div class="hv-mini" onclick="openSteam('https://store.steampowered.com/app/1172470/Apex_Legends/')">
           <div class="hv-mini-emoji">🎯</div>
-          <div><div class="hv-mini-title">Apex Legends</div><div class="
+          <div><div class="hv-mini-title">Apex Legends</div><div class="hv-mini-genre">Battle Royale</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ──────────────────────────────────────────────────── -->
+<div style="padding:0 clamp(16px,5vw,64px);max-width:1364px;margin:0 auto">
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-num">20</div><div class="stat-label">Curated Games</div></div>
+    <div class="stat-cell"><div class="stat-num">8</div><div class="stat-label">Genres Covered</div></div>
+    <div class="stat-cell"><div class="stat-num">6</div><div class="stat-label">Free-to-Play Titles</div></div>
+    <div class="stat-cell"><div class="stat-num">100%</div><div class="stat-label">Official Steam Links</div></div>
+  </div>
+</div>
+
+<!-- ── FEATURED ───────────────────────────────────────────────── -->
+<section class="section section-alt" id="featured">
+  <div class="section-inner">
+    <div class="featured-banner">
+      <div class="fb-emoji">🏆</div>
+      <div style="flex:1;position:relative;z-index:1">
+        <div class="fb-label">Editor's Pick · 2024</div>
+        <div class="fb-title">Baldur's Gate 3</div>
+        <div class="fb-desc">The highest-rated game of the decade. 174 Game of the Year awards. A 200-hour journey through a world that actually responds to everything you do.</div>
+        <button class="btn-primary" onclick="openSteam('https://store.steampowered.com/app/1086940/Baldurs_Gate_3/')">Open in Steam ↗</button>
+      </div>
+      <div style="text-align:right;position:relative;z-index:1;flex-shrink:0">
+        <div style="font-family:var(--font-hud);font-size:56px;font-weight:900;color:var(--cyan);line-height:1;text-shadow:0 0 40px var(--cyan-glow)">9.9</div>
+        <div style="font-size:13px;color:var(--t3);margin-top:4px;letter-spacing:1px">DEEPVAULT SCORE</div>
+        <div style="font-family:var(--font-ui);font-size:24px;font-weight:700;color:var(--gold);margin-top:8px">$59.99</div>
+      </div>
+    </div>
+
+    <!-- Genre filter -->
+    <div class="genre-bar" id="genreBar">
+      <div class="genre-pill active" onclick="setGenre('all',this)">All Games</div>
+      <div class="genre-pill" onclick="setGenre('RPG',this)">RPG</div>
+      <div class="genre-pill" onclick="setGenre('Action',this)">Action</div>
+      <div class="genre-pill" onclick="setGenre('Shooter',this)">Shooter</div>
+      <div class="genre-pill" onclick="setGenre('Strategy',this)">Strategy</div>
+      <div class="genre-pill" onclick="setGenre('Adventure',this)">Adventure</div>
+      <div class="genre-pill" onclick="setGenre('Survival',this)">Survival</div>
+      <div class="genre-pill" onclick="setGenre('Indie',this)">Indie</div>
+      <div class="genre-pill" onclick="setGenre('Racing',this)">Racing</div>
+    </div>
+
+    <div id="noResults" style="display:none;text-align:center;padding:60px 0;color:var(--t3)">
+      <div style="font-size:48px;margin-bottom:12px">🔍</div>
+      <div style="font-family:var(--font-ui);font-size:20px;font-weight:700;margin-bottom:8px">No games found</div>
+      <div style="font-size:14px">Try a different search or filter.</div>
+    </div>
+
+    <div class="games-grid" id="catalog"></div>
+  </div>
+</section>
+
+<!-- ── TOP RATED ──────────────────────────────────────────────── -->
+<section class="section" id="top-rated">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Community Picks</div>
+        <div class="section-title">Highest Rated</div>
+      </div>
+      <span class="section-more" onclick="setGenre('all',document.querySelector('.genre-pill.active'));document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">View all →</span>
+    </div>
+    <div class="games-grid" id="topRatedGrid"></div>
+  </div>
+</section>
+
+<!-- ── FREE TO PLAY ───────────────────────────────────────────── -->
+<section class="section section-alt" id="free">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Zero Cost, Maximum Fun</div>
+        <div class="section-title">Free to Play</div>
+      </div>
+    </div>
+    <div class="games-grid" id="freeGrid"></div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="f-logo">DEEPVAULT</div>
+        <div class="f-desc">Your gateway to PC gaming. Curated titles, direct Steam links, zero ads. Just games.</div>
+      </div>
+      <div>
+        <div class="f-heading">Browse</div>
+        <div class="f-links">
+          <a onclick="setGenre('RPG',null);document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">RPG</a>
+          <a onclick="setGenre('Action',null);document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Action</a>
+          <a onclick="setGenre('Shooter',null);document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Shooter</a>
+          <a onclick="setGenre('Strategy',null);document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Strategy</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-heading">Stores</div>
+        <div class="f-links">
+          <a href="https://store.steampowered.com" target="_blank" rel="noopener">Steam</a>
+          <a href="https://epicgames.com" target="_blank" rel="noopener">Epic Games</a>
+          <a href="https://gog.com" target="_blank" rel="noopener">GOG.com</a>
+          <a href="https://xbox.com" target="_blank" rel="noopener">Xbox</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-heading">Platform</div>
+        <div class="f-links">
+          <a>About DeepVault</a>
+          <a>Submit a Game</a>
+          <a>Advertise</a>
+          <a>Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">DeepVault © 2026 — <span>Discover. Compare. Play.</span> · Not affiliated with Valve or Steam.</div>
+      <div class="footer-legal">
+        <a>Terms</a>
+        <a>Privacy</a>
+        <a>Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="toast">✅ <span id="toastMsg">Opening Steam…</span></div>
+
+<script>
+/* ── GAME DATA ─────────────────────────────────────────────── */
+const GAMES = [
+  {
+    id:1, title:"Baldur's Gate 3", genre:"RPG",
+    emoji:"🏆", bg:"linear-gradient(135deg,#0a1a0f,#1a2a10)",
+    desc:"174 GOTY awards. A 200-hour D&D odyssey that reshapes itself around every choice.",
+    rating:9.9, price:"$59.99", badge:"hot",
+    url:"https://store.steampowered.com/app/1086940/Baldurs_Gate_3/"
+  },
+  {
+    id:2, title:"Cyberpunk 2077", genre:"RPG",
+    emoji:"🌆", bg:"linear-gradient(135deg,#0a0a1a,#1a0a2e)",
+    desc:"Neon-soaked Night City in first-person. Phantom Liberty DLC included.",
+    rating:9.2, price:"$29.99", orig:"$59.99", badge:"sale",
+    url:"https://store.steampowered.com/app/1716740/Cyberpunk_2077/"
+  },
+  {
+    id:3, title:"Elden Ring", genre:"Action",
+    emoji:"⚔️", bg:"linear-gradient(135deg,#1a0a00,#2a1a05)",
+    desc:"FromSoftware's open-world masterpiece co-crafted with George R.R. Martin.",
+    rating:9.6, price:"$59.99", badge:"hot",
+    url:"https://store.steampowered.com/app/1245620/ELDEN_RING/"
+  },
+  {
+    id:4, title:"Counter-Strike 2", genre:"Shooter",
+    emoji:"💥", bg:"linear-gradient(135deg,#001a1a,#002a2a)",
+    desc:"The world's most played competitive FPS, rebuilt from the ground up.",
+    rating:8.8, price:null, badge:"free",
+    url:"https://store.steampowered.com/app/730/CounterStrike_2/"
+  },
+  {
+    id:5, title:"Red Dead Redemption 2", genre:"Adventure",
+    emoji:"🤠", bg:"linear-gradient(135deg,#1a0a00,#2e1600)",
+    desc:"Rockstar's magnum opus. A dying outlaw's last ride across frontier America.",
+    rating:9.7, price:"$39.99", orig:"$59.99", badge:"sale",
+    url:"https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/"
+  },
+  {
+    id:6, title:"Apex Legends", genre:"Shooter",
+    emoji:"🎯", bg:"linear-gradient(135deg,#0a1a00,#1a2e00)",
+    desc:"The smoothest movement-shooter battle royale on the market. Free forever.",
+    rating:8.5, price:null, badge:"free",
+    url:"https://store.steampowered.com/app/1172470/Apex_Legends/"
+  },
+  {
+    id:7, title:"Civilization VI", genre:"Strategy",
+    emoji:"🗺️", bg:"linear-gradient(135deg,#1a1400,#2a2000)",
+    desc:"One more turn. Build empires from prehistory to the space age.",
+    rating:9.0, price:"$9.99", orig:"$59.99", badge:"sale",
+    url:"https://store.steampowered.com/app/289070/Sid_Meiers_Civilization_VI/"
+  },
+  {
+    id:8, title:"Hades", genre:"Action",
+    emoji:"🔥", bg:"linear-gradient(135deg,#1a0000,#2a0505)",
+    desc:"The roguelike that won every award in 2020. Every run tells a new story.",
+    rating:9.5, price:"$24.99", badge:"new",
+    url:"https://store.steampowered.com/app/1145360/Hades/"
+  },
+  {
+    id:9, title:"Hollow Knight", genre:"Indie",
+    emoji:"🦋", bg:"linear-gradient(135deg,#000a1a,#000f2a)",
+    desc:"Hand-drawn metroidvania of haunting beauty. 40+ hours of platforming perfection.",
+    rating:9.4, price:"$14.99", badge:null,
+    url:"https://store.steampowered.com/app/367520/Hollow_Knight/"
+  },
+  {
+    id:10, title:"Dota 2", genre:"Strategy",
+    emoji:"🧙", bg:"linear-gradient(135deg,#0a001a,#15002e)",
+    desc:"The deepest competitive game ever made. Infinite skill ceiling, free to play.",
+    rating:8.7, price:null, badge:"free",
+    url:"https://store.steampowered.com/app/570/Dota_2/"
+  },
+  {
+    id:11, title:"The Witcher 3", genre:"RPG",
+    emoji:"🐺", bg:"linear-gradient(135deg,#0a0f1a,#101525)",
+    desc:"Still the gold standard of open-world storytelling. Complete Edition.",
+    rating:9.8, price:"$9.99", orig:"$39.99", badge:"sale",
+    url:"https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/"
+  },
+  {
+    id:12, title:"Deep Rock Galactic", genre:"Shooter",
+    emoji:"⛏️", bg:"linear-gradient(135deg,#0a0500,#1a0f00)",
+    desc:"Co-op mining FPS in procedurally generated caves. Rock and Stone!",
+    rating:9.3, price:"$29.99", badge:"hot",
+    url:"https://store.steampowered.com/app/548430/Deep_Rock_Galactic/"
+  },
+  {
+    id:13, title:"Starfield", genre:"RPG",
+    emoji:"🚀", bg:"linear-gradient(135deg,#000a1a,#001225)",
+    desc:"Bethesda's space epic. 1,000 procedurally generated planets to explore.",
+    rating:8.1, price:"$39.99", badge:"new",
+    url:"https://store.steampowered.com/app/1716740/"
+  },
+  {
+    id:14, title:"Terraria", genre:"Indie",
+    emoji:"⛏️", bg:"linear-gradient(135deg,#001a10,#002a18)",
+    desc:"10 million items, infinite worlds. The 2D sandbox that never gets old.",
+    rating:9.6, price:"$9.99", badge:null,
+    url:"https://store.steampowered.com/app/105600/Terraria/"
+  },
+  {
+    id:15, title:"PUBG: Battlegrounds", genre:"Shooter",
+    emoji:"🪖", bg:"linear-gradient(135deg,#0a0a00,#1a1a00)",
+    desc:"The game that defined the battle royale genre. Now free to play.",
+    rating:8.0, price:null, badge:"free",
+    url:"https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/"
+  },
+  {
+    id:16, title:"Sekiro: Shadows Die Twice", genre:"Action",
+    emoji:"🗡️", bg:"linear-gradient(135deg,#0a0000,#1a0505)",
+    desc:"The purest expression of FromSoftware's design philosophy. Punishing. Perfect.",
+    rating:9.4, price:"$59.99", badge:null,
+    url:"https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice__GOTY_Edition/"
+  },
+  {
+    id:17, title:"Total War: Warhammer III", genre:"Strategy",
+    emoji:"🏰", bg:"linear-gradient(135deg,#0f0500,#1a0a05)",
+    desc:"Thousands of units clashing in real-time on a Warhammer Fantasy battlefield.",
+    rating:8.9, price:"$19.99", orig:"$59.99", badge:"sale",
+    url:"https://store.steampowered.com/app/1142710/Total_War_WARHAMMER_III/"
+  },
+  {
+    id:18, title:"Celeste", genre:"Indie",
+    emoji:"🏔️", bg:"linear-gradient(135deg,#0a0015,#150025)",
+    desc:"A precision platformer about mental health. Tight controls, warm heart.",
+    rating:9.5, price:"$19.99", badge:null,
+    url:"https://store.steampowered.com/app/504230/Celeste/"
+  },
+  {
+    id:19, title:"Forza Horizon 5", genre:"Racing",
+    emoji:"🏎️", bg:"linear-gradient(135deg,#0a1500,#152000)",
+    desc:"The benchmark of open-world racing. 600+ cars across a stunning Mexico map.",
+    rating:9.1, price:"$59.99", badge:"new",
+    url:"https://store.steampowered.com/app/1551360/Forza_Horizon_5/"
+  },
+  {
+    id:20, title:"Path of Exile", genre:"RPG",
+    emoji:"💀", bg:"linear-gradient(135deg,#0a0a0a,#1a0505)",
+    desc:"The free ARPG so deep it makes Diablo look like a tutorial.",
+    rating:8.8, price:null, badge:"free",
+    url:"https://store.steampowered.com/app/238960/Path_of_Exile/"
+  }
+];
+
+/* ── STATE ─────────────────────────────────────────────────── */
+let currentGenre = 'all';
+let searchQuery  = '';
+
+/* ── RENDER CARD ───────────────────────────────────────────── */
+function badgeHtml(badge){
+  if(!badge) return '';
+  const map = {hot:'badge-hot',new:'badge-new',sale:'badge-sale',free:'badge-free'};
+  const text = {hot:'🔥 HOT',new:'✨ NEW',sale:'SALE',free:'FREE'};
+  return `<div class="card-badge ${map[badge]}">${text[badge]}</div>`;
+}
+
+function renderCard(g){
+  const priceHtml = g.price
+    ? `<span class="card-price">${g.price}${g.orig?`<span class="orig">${g.orig}</span>`:''}</span>`
+    : `<span class="card-price free">FREE</span>`;
+
+  return `
+  <div class="game-card" data-genre="${g.genre}" data-id="${g.id}">
+    <div class="card-art">
+      <div class="card-art-inner" style="background:${g.bg}">${g.emoji}</div>
+      ${badgeHtml(g.badge)}
+    </div>
+    <div class="card-body">
+      <div class="card-genre">${g.genre}</div>
+      <div class="card-title">${g.title}</div>
+      <div class="card-desc">${g.desc}</div>
+      <div class="card-foot">
+        <div class="card-rating"><span class="star">★</span> ${g.rating}</div>
+        ${priceHtml}
+      </div>
+      <a href="${g.url}" target="_blank" rel="noopener" class="btn-steam" onclick="toast('Opening ${g.title} on Steam…')">
+        View on Steam
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>`;
+}
+
+/* ── MAIN RENDER ───────────────────────────────────────────── */
+function render(){
+  const q = searchQuery.toLowerCase();
+  const filtered = GAMES.filter(g => {
+    const matchGenre = currentGenre === 'all' || g.genre === currentGenre;
+    const matchSearch = !q || g.title.toLowerCase().includes(q) || g.genre.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q);
+    return matchGenre && matchSearch;
+  });
+
+  const grid = document.getElementById('catalog');
+  const none = document.getElementById('noResults');
+  if(filtered.length === 0){
+    grid.innerHTML = '';
+    none.style.display = 'block';
+  } else {
+    none.style.display = 'none';
+    grid.innerHTML = filtered.map(renderCard).join('');
+  }
+}
+
+function renderTopRated(){
+  const top = [...GAMES].sort((a,b)=>b.rating-a.rating).slice(0,4);
+  document.getElementById('topRatedGrid').innerHTML = top.map(renderCard).join('');
+}
+
+function renderFree(){
+  const free = GAMES.filter(g=>!g.price);
+  document.getElementById('freeGrid').innerHTML = free.map(renderCard).join('');
+}
+
+/* ── GENRE FILTER ──────────────────────────────────────────── */
+function setGenre(genre, btn){
+  currentGenre = genre;
+  document.querySelectorAll('.genre-pill').forEach(p=>p.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  else {
+    const pills = document.querySelectorAll('.genre-pill');
+    pills.forEach(p=>{ if(p.textContent.trim()==='All Games'||p.textContent===genre) p.classList.add('active'); });
+  }
+  render();
+}
+
+/* ── SEARCH ─────────────────────────────────────────────────── */
+function filterGames(val){
+  searchQuery = val;
+  // Reset genre to all when searching
+  if(val){ currentGenre='all'; document.querySelectorAll('.genre-pill').forEach(p=>p.classList.remove('active')); document.querySelector('.genre-pill').classList.add('active'); }
+  render();
+  if(val) document.getElementById('catalog').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── STORE REDIRECT ─────────────────────────────────────────── */
+function openSteam(url){
+  window.open(url,'_blank','noopener');
+  toast('Opening Steam…');
+}
+
+/* ── TOAST ─────────────────────────────────────────────────── */
+let toastTimer;
+function toast(msg){
+  const el = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>el.classList.remove('show'), 2800);
+}
+
+/* ── MOBILE MENU ────────────────────────────────────────────── */
+function toggleMenu(){
+  document.getElementById('mobileDrawer').classList.toggle('open');
+}
+function closeMobile(){
+  document.getElementById('mobileDrawer').classList.remove('open');
+}
+
+/* ── INIT ───────────────────────────────────────────────────── */
+render();
+renderTopRated();
+renderFree();
+</script>
+</body>
+</html>
