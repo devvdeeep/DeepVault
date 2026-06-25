@@ -928,6 +928,21 @@
       .modal-cover { height:250px; }
     }
   </style>
+<!-- Microsoft Clarity Analytics Start -->
+<!-- Replace YOUR_CLARITY_PROJECT_ID with your actual Clarity Project ID -->
+
+<script type="text/javascript">
+(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);
+    t.async=1;
+    t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];
+    y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "YOUR_CLARITY_PROJECT_ID");
+</script>
+
+<!-- Microsoft Clarity Analytics End -->
 </head>
 <body>
   <div class="loading-wrap" id="loadingWrap">
@@ -1512,8 +1527,16 @@
 
     init();
   </script>
+  <!-- Microsoft Clarity Analytics -->
   <script>
-    CLARITY_PLACEHOLDER
+    (function(c,l,a,r,i,t,y){
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+        t = l.createElement(r); t.async = 1;
+        // <-- Insert your Microsoft Clarity Project ID below in place of YOUR_CLARITY_PROJECT_ID -->
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "YOUR_CLARITY_PROJECT_ID");
+    // ^-- Replace YOUR_CLARITY_PROJECT_ID above with your actual Microsoft Clarity Project ID
   </script>
 </body>
 </html>
