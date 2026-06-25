@@ -392,12 +392,7 @@
       margin-bottom:6px;
     }
     .section-title {
-      font-family:var(--font-uI);
-    }
-    .section-title, .section-title-alt {
-      font-family:var(--font-uI);
-    }
-    .section-title {
+      font-family:var(--font-ui);
       font-size:clamp(22px,3vw,32px);
       font-weight:700;
       letter-spacing:-.5px;
@@ -775,123 +770,17 @@
       text-transform:uppercase;
     }
 
-    .modal-backdrop {
-      position:fixed;
-      inset:0;
-      background:rgba(5,6,14,.72);
-      backdrop-filter:blur(18px);
-      z-index:12000;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-    }
-    .modal-backdrop.show { display:flex; }
-    .modal {
-      width:min(920px,100%);
-      max-height:90vh;
-      overflow:auto;
-      background:linear-gradient(180deg,#11162a,#0d1020);
-      border:1px solid var(--rim2);
-      border-radius:22px;
-      box-shadow:0 26px 90px rgba(0,0,0,.75);
-      position:relative;
-    }
-    .modal-inner {
-      display:grid;
-      grid-template-columns:320px 1fr;
-      gap:0;
-    }
-    .modal-cover {
-      min-height:100%;
-      background:#0c1222;
-      position:relative;
-      overflow:hidden;
-    }
-    .modal-cover img { min-height:100%; }
-    .modal-cover:after {
-      content:'';
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to top,rgba(5,6,14,.2),transparent 45%);
-      pointer-events:none;
-    }
-    .modal-content { padding:28px; }
-    .modal-close {
-      position:absolute;
-      top:16px;
-      right:16px;
-      width:40px;
-      height:40px;
-      border-radius:50%;
-      background:rgba(255,255,255,.06);
-      color:var(--t1);
-      border:1px solid var(--rim);
-      font-size:22px;
-      line-height:1;
-      z-index:2;
-    }
-    .modal-close:hover { background:rgba(255,255,255,.1); }
-    .modal-kicker {
-      font-size:11px;
-      font-weight:700;
-      letter-spacing:3px;
-      text-transform:uppercase;
-      color:var(--cyan);
-      margin-bottom:10px;
-    }
-    .modal-title {
-      font-family:var(--font-hud);
-      font-size:clamp(24px,4vw,40px);
-      font-weight:900;
-      line-height:1.08;
-      margin-bottom:14px;
-    }
-    .modal-meta {
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:18px;
-    }
-    .modal-pill {
-      padding:6px 12px;
-      border-radius:999px;
-      border:1px solid var(--rim2);
-      background:rgba(255,255,255,.04);
-      color:var(--t2);
-      font-size:13px;
-      font-weight:600;
-    }
-    .modal-pill.rating { color:var(--gold); }
-    .modal-desc {
-      color:var(--t2);
-      font-size:15px;
-      line-height:1.8;
-      margin-bottom:22px;
-    }
-    .modal-actions { display:flex; gap:12px; flex-wrap:wrap; }
-
-    .game-grid-loading {
-      position:relative;
-      min-height:260px;
-      overflow:hidden;
-    }
-    .skeleton {
-      position:relative;
-      background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.08),rgba(255,255,255,.04));
-      background-size:200% 100%;
-      animation:shimmer 1.4s infinite;
-      border-radius:14px;
-      height:290px;
-      border:1px solid var(--rim);
-    }
-    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-
     #noResults {
       display:none;
       text-align:center;
       padding:60px 0;
       color:var(--t3);
+    }
+
+    .game-card-link {
+      display:contents;
+      color:inherit;
+      text-decoration:none;
     }
 
     @media (max-width: 1024px) {
@@ -901,8 +790,6 @@
       .footer-grid { grid-template-columns:1fr 1fr; }
       .footer-grid > div:first-child { grid-column:1 / -1; }
       .stats-strip { grid-template-columns:repeat(2,1fr); }
-      .modal-inner { grid-template-columns:1fr; }
-      .modal-cover { height:320px; }
     }
 
     @media (max-width: 768px) {
@@ -924,8 +811,6 @@
       .btn-primary, .btn-secondary { width:100%; text-align:center; }
       .stats-strip { grid-template-columns:1fr; }
       .footer-bottom { flex-direction:column; text-align:center; }
-      .modal-content { padding:22px 18px 20px; }
-      .modal-cover { height:250px; }
     }
   </style>
 <script type="text/javascript">
@@ -989,7 +874,7 @@
         </div>
       </div>
       <div class="hero-visual">
-        <div class="hv-main" onclick="openGameModal(1)">
+        <div class="hv-main" onclick="location.href='game-detail.html?id=1'">
           <div class="hv-main-img"><img id="heroCover" alt="Featured game cover"></div>
           <div class="hv-info">
             <div class="hv-genre" id="heroGenre"></div>
@@ -1001,14 +886,14 @@
           </div>
         </div>
         <div class="hv-row">
-          <div class="hv-mini" onclick="openGameModal(3)">
+          <div class="hv-mini" onclick="location.href='game-detail.html?id=3'">
             <div class="hv-mini-thumb"><img id="mini1Cover" alt="Game cover"></div>
             <div>
               <div class="hv-mini-title" id="mini1Title"></div>
               <div class="hv-mini-genre" id="mini1Genre"></div>
             </div>
           </div>
-          <div class="hv-mini" onclick="openGameModal(6)">
+          <div class="hv-mini" onclick="location.href='game-detail.html?id=6'">
             <div class="hv-mini-thumb"><img id="mini2Cover" alt="Game cover"></div>
             <div>
               <div class="hv-mini-title" id="mini2Title"></div>
@@ -1150,61 +1035,34 @@
 
   <div class="toast" id="toast"><span id="toastMsg">Opening Steam</span></div>
 
-  <div class="modal-backdrop" id="gameModalBackdrop" onclick="closeGameModal(event)">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="modal-close" onclick="closeGameModal()" aria-label="Close modal">&times;</button>
-      <div class="modal-inner" onclick="event.stopPropagation()">
-        <div class="modal-cover"><img id="modalCover" alt="Game cover"></div>
-        <div class="modal-content">
-          <div class="modal-kicker">Game Details</div>
-          <div class="modal-title" id="modalTitle"></div>
-          <div class="modal-meta">
-            <div class="modal-pill" id="modalGenre"></div>
-            <div class="modal-pill rating" id="modalRating"></div>
-            <div class="modal-pill" id="modalPrice"></div>
-          </div>
-          <div class="modal-desc" id="modalDesc"></div>
-          <div class="modal-actions">
-            <button class="btn-primary" id="modalSteamBtn">View on Steam</button>
-            <button class="btn-secondary" onclick="closeGameModal()">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
     const GAMES = [
-      { id:1, title:"Baldur's Gate 3", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/header.jpg", description:"A massive fantasy RPG with reactive storytelling, tactical combat, and near-limitless player choice.", rating:9.9, price:59.99, steam:"https://store.steampowered.com/app/1086940/Baldurs_Gate_3/", badge:"hot" },
-      { id:2, title:"Cyberpunk 2077", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg", description:"A neon-soaked open-world RPG set in Night City, featuring story-rich quests and sharp first-person action.", rating:9.2, price:29.99, originalPrice:59.99, steam:"https://store.steampowered.com/app/1091500/Cyberpunk_2077/", badge:"sale" },
-      { id:3, title:"Elden Ring", genre:"Action", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg", description:"An open-world action masterpiece where ruthless combat meets discovery, mystery, and enormous freedom.", rating:9.6, price:59.99, steam:"https://store.steampowered.com/app/1245620/ELDEN_RING/", badge:"hot" },
-      { id:4, title:"Counter-Strike 2", genre:"Shooter", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/730/header.jpg", description:"The iconic competitive FPS rebuilt with modern visuals, precise gunplay, and high-stakes team tactics.", rating:8.8, price:null, steam:"https://store.steampowered.com/app/730/CounterStrike_2/", badge:"free" },
-      { id:5, title:"Red Dead Redemption 2", genre:"Adventure", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg", description:"A cinematic frontier epic with exceptional writing, rich world detail, and unforgettable moments.", rating:9.7, price:39.99, originalPrice:59.99, steam:"https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/", badge:"sale" },
-      { id:6, title:"Apex Legends", genre:"Shooter", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/header.jpg", description:"A fast, fluid battle royale with sharp squad play, stylish legends, and constant seasonal updates.", rating:8.5, price:null, steam:"https://store.steampowered.com/app/1172470/Apex_Legends/", badge:"free" },
-      { id:7, title:"Civilization VI", genre:"Strategy", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/289070/header.jpg", description:"A deep 4X strategy game about building civilizations, managing diplomacy, and planning one more turn.", rating:9.0, price:9.99, originalPrice:59.99, steam:"https://store.steampowered.com/app/289070/Sid_Meiers_Civilization_VI/", badge:"sale" },
-      { id:8, title:"Hades", genre:"Action", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg", description:"A stylish roguelike with sharp combat, strong narrative pacing, and endlessly replayable runs.", rating:9.5, price:24.99, steam:"https://store.steampowered.com/app/1145360/Hades/", badge:"new" },
-      { id:9, title:"Hollow Knight", genre:"Indie", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg", description:"A beautifully crafted metroidvania with precise movement, challenging bosses, and atmospheric world design.", rating:9.4, price:14.99, steam:"https://store.steampowered.com/app/367520/Hollow_Knight/", badge:null },
-      { id:10, title:"Dota 2", genre:"Strategy", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/header.jpg", description:"A deep, competitive MOBA with huge strategic depth and a famously high skill ceiling.", rating:8.7, price:null, steam:"https://store.steampowered.com/app/570/Dota_2/", badge:"free" },
-      { id:11, title:"The Witcher 3", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg", description:"An open-world classic with excellent quests, memorable characters, and a massive story campaign.", rating:9.8, price:9.99, originalPrice:39.99, steam:"https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/", badge:"sale" },
-      { id:12, title:"Deep Rock Galactic", genre:"Shooter", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/548430/header.jpg", description:"A co-op mining shooter built around teamwork, destructible caves, and a lot of dwarven chaos.", rating:9.3, price:29.99, steam:"https://store.steampowered.com/app/548430/Deep_Rock_Galactic/", badge:"hot" },
-      { id:13, title:"Starfield", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1716740/header.jpg", description:"A spacefaring RPG focused on exploration, faction choices, and building your own sci-fi journey.", rating:8.1, price:39.99, steam:"https://store.steampowered.com/app/1716740/Starfield/", badge:"new" },
-      { id:14, title:"Terraria", genre:"Indie", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg", description:"A vast sandbox adventure packed with crafting, boss fights, exploration, and endless creativity.", rating:9.6, price:9.99, steam:"https://store.steampowered.com/app/105600/Terraria/", badge:null },
-      { id:15, title:"PUBG: BATTLEGROUNDS", genre:"Shooter", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/578080/header.jpg", description:"The battle royale that helped define the genre, offering tense survival matches and tactical gunfights.", rating:8.0, price:null, steam:"https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/", badge:"free" },
-      { id:16, title:"Sekiro: Shadows Die Twice", genre:"Action", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/814380/header.jpg", description:"A tightly designed action game centered on timing, posture combat, and punishing precision.", rating:9.4, price:59.99, steam:"https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice/", badge:null },
-      { id:17, title:"Total War: WARHAMMER III", genre:"Strategy", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1142710/header.jpg", description:"A grand strategy and real-time warfare hybrid with huge armies, magic, and fantasy domination.", rating:8.9, price:19.99, originalPrice:59.99, steam:"https://store.steampowered.com/app/1142710/Total_War_WARHAMMER_III/", badge:"sale" },
-      { id:18, title:"Celeste", genre:"Indie", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/504230/header.jpg", description:"A precision platformer with tight controls, emotional storytelling, and challenging climbing stages.", rating:9.5, price:19.99, steam:"https://store.steampowered.com/app/504230/Celeste/", badge:null },
-      { id:19, title:"Forza Horizon 5", genre:"Racing", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg", description:"An open-world racing showcase with hundreds of cars, beautiful locations, and accessible speed.", rating:9.1, price:59.99, steam:"https://store.steampowered.com/app/1551360/Forza_Horizon_5/", badge:"new" },
-      { id:20, title:"Path of Exile", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/238960/header.jpg", description:"A deep free-to-play action RPG with enormous build variety, seasonal leagues, and a massive endgame.", rating:8.8, price:null, steam:"https://store.steampowered.com/app/238960/Path_of_Exile/", badge:"free" }
+      { id:1, title:"Baldur's Gate 3", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/header.jpg", description:"A massive fantasy RPG with reactive storytelling, tactical combat, and near-limitless player choice.", rating:9.9, price:59.99, steam:"https://store.steampowered.com/app/1086940/Baldurs_Gate_3/", badge:"hot", developer:"Larian Studios", publisher:"Larian Studios", releaseDate:"August 3, 2023", minRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-4690 / AMD FX 8350, RAM: 8GB, GPU: NVIDIA GTX 970 / AMD RX 480", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-8700K / AMD Ryzen 5 3600, RAM: 16GB, GPU: NVIDIA RTX 2060 / AMD RX 5700 XT", trailer:"https://www.youtube.com/embed/GtT2r9gXeGQ", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/ss_3.jpg"], website:"https://baldursgate3.game/" },
+      { id:2, title:"Cyberpunk 2077", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg", description:"A neon-soaked open-world RPG set in Night City, featuring story-rich quests and sharp first-person action.", rating:9.2, price:29.99, originalPrice:59.99, steam:"https://store.steampowered.com/app/1091500/Cyberpunk_2077/", badge:"sale", developer:"CD Projekt Red", publisher:"CD Projekt Red", releaseDate:"December 10, 2020", minRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-3570K / AMD FX-8310, RAM: 8GB, GPU: NVIDIA GTX 780 / AMD RX 470", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-4790 / AMD Ryzen 3 3200G, RAM: 12GB, GPU: NVIDIA GTX 1060 / AMD RX 580", trailer:"https://www.youtube.com/embed/qIcTM8WXFjk", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/ss_3.jpg"], website:"https://www.cyberpunk.net/" },
+      { id:3, title:"Elden Ring", genre:"Action", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg", description:"An open-world action masterpiece where ruthless combat meets discovery, mystery, and enormous freedom.", rating:9.6, price:59.99, steam:"https://store.steampowered.com/app/1245620/ELDEN_RING/", badge:"hot", developer:"FromSoftware", publisher:"Bandai Namco", releaseDate:"February 25, 2022", minRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-8400 / AMD Ryzen 3 3300X, RAM: 12GB, GPU: NVIDIA GTX 1060 / AMD RX 580", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-8700K / AMD Ryzen 5 3600X, RAM: 16GB, GPU: NVIDIA RTX 2070 / AMD RX 5700 XT", trailer:"https://www.youtube.com/embed/E3Huy2cdih0", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1245620/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1245620/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1245620/ss_3.jpg"], website:"https://en.bandainamcoent.eu/elden-ring" },
+      { id:4, title:"Counter-Strike 2", genre:"Shooter", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/730/header.jpg", description:"The iconic competitive FPS rebuilt with modern visuals, precise gunplay, and high-stakes team tactics.", rating:8.8, price:null, steam:"https://store.steampowered.com/app/730/CounterStrike_2/", badge:"free", developer:"Valve", publisher:"Valve", releaseDate:"September 27, 2023", minRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-750 / AMD Phenom II X4, RAM: 8GB, GPU: NVIDIA GTX 660 / AMD HD 7870", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-6700 / AMD Ryzen 5 2600, RAM: 16GB, GPU: NVIDIA RTX 2060 / AMD RX 5700", trailer:"https://www.youtube.com/embed/c80iX3y4b58", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/730/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/730/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/730/ss_3.jpg"], website:"https://www.counter-strike.net/" },
+      { id:5, title:"Red Dead Redemption 2", genre:"Adventure", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg", description:"A cinematic frontier epic with exceptional writing, rich world detail, and unforgettable moments.", rating:9.7, price:39.99, originalPrice:59.99, steam:"https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/", badge:"sale", developer:"Rockstar Games", publisher:"Rockstar Games", releaseDate:"December 5, 2019", minRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-2500K / AMD FX-6300, RAM: 8GB, GPU: NVIDIA GTX 770 / AMD R9 280", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-4770K / AMD Ryzen 5 1500X, RAM: 12GB, GPU: NVIDIA GTX 1060 / AMD RX 480", trailer:"https://www.youtube.com/embed/gmA6MrX81z4", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/ss_3.jpg"], website:"https://www.rockstargames.com/reddeadredemption2/" },
+      { id:6, title:"Apex Legends", genre:"Shooter", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/header.jpg", description:"A fast, fluid battle royale with sharp squad play, stylish legends, and constant seasonal updates.", rating:8.5, price:null, steam:"https://store.steampowered.com/app/1172470/Apex_Legends/", badge:"free", developer:"Respawn Entertainment", publisher:"Electronic Arts", releaseDate:"February 4, 2019", minRequirements:"OS: Windows 10 64-bit, CPU: Intel i3-6300 / AMD FX-4350, RAM: 6GB, GPU: NVIDIA GTX 660 / AMD Radeon HD 7870", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-3570K / AMD Ryzen 5 1400, RAM: 8GB, GPU: NVIDIA GTX 970 / AMD R9 290", trailer:"https://www.youtube.com/embed/oQtHENM_GZU", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/ss_3.jpg"], website:"https://www.ea.com/games/apex-legends" },
+      { id:7, title:"Civilization VI", genre:"Strategy", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/289070/header.jpg", description:"A deep 4X strategy game about building civilizations, managing diplomacy, and planning one more turn.", rating:9.0, price:9.99, originalPrice:59.99, steam:"https://store.steampowered.com/app/289070/Sid_Meiers_Civilization_VI/", badge:"sale", developer:"Firaxis Games", publisher:"2K Games", releaseDate:"October 21, 2016", minRequirements:"OS: Windows 7 64-bit, CPU: Intel i3-530 / AMD A8-3870K, RAM: 4GB, GPU: NVIDIA GTX 650 / AMD Radeon HD 7770", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-3570K / AMD Ryzen 5 1600X, RAM: 8GB, GPU: NVIDIA GTX 770 / AMD RX 480", trailer:"https://www.youtube.com/embed/5KdE0p2joJw", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/289070/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/289070/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/289070/ss_3.jpg"], website:"https://civilization.com/" },
+      { id:8, title:"Hades", genre:"Action", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg", description:"A stylish roguelike with sharp combat, strong narrative pacing, and endlessly replayable runs.", rating:9.5, price:24.99, steam:"https://store.steampowered.com/app/1145360/Hades/", badge:"new", developer:"Supergiant Games", publisher:"Supergiant Games", releaseDate:"September 17, 2020", minRequirements:"OS: Windows 7 SP1, CPU: Intel i5-2500 / AMD FX-6300, RAM: 4GB, GPU: NVIDIA GTX 660 / AMD Radeon HD 7850", recRequirements:"OS: Windows 7 SP1, CPU: Intel i7-3770 / AMD FX-8350, RAM: 8GB, GPU: NVIDIA GTX 970 / AMD R9 290X", trailer:"https://www.youtube.com/embed/91TdL1aH6II", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1145360/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1145360/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1145360/ss_3.jpg"], website:"https://www.supergiantgames.com/games/hades/" },
+      { id:9, title:"Hollow Knight", genre:"Indie", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg", description:"A beautifully crafted metroidvania with precise movement, challenging bosses, and atmospheric world design.", rating:9.4, price:14.99, steam:"https://store.steampowered.com/app/367520/Hollow_Knight/", badge:null, developer:"Team Cherry", publisher:"Team Cherry", releaseDate:"February 24, 2017", minRequirements:"OS: Windows 7, CPU: Intel i3-2100 / AMD Phenom II X4, RAM: 4GB, GPU: NVIDIA GTX 560 / AMD Radeon HD 6870", recRequirements:"OS: Windows 10, CPU: Intel i5-2500K / AMD Ryzen 3 1200, RAM: 8GB, GPU: NVIDIA GTX 960 / AMD R9 380", trailer:"https://www.youtube.com/embed/xHnFXXaMk3k", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/367520/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/367520/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/367520/ss_3.jpg"], website:"https://hollowknight.com/" },
+      { id:10, title:"Dota 2", genre:"Strategy", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/header.jpg", description:"A deep, competitive MOBA with huge strategic depth and a famously high skill ceiling.", rating:8.7, price:null, steam:"https://store.steampowered.com/app/570/Dota_2/", badge:"free", developer:"Valve", publisher:"Valve", releaseDate:"July 9, 2013", minRequirements:"OS: Windows 7 64-bit, CPU: Intel i3-530 / AMD Athlon II X4, RAM: 4GB, GPU: NVIDIA GTX 460 / AMD Radeon HD 5770", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-6600K / AMD Ryzen 5 1600, RAM: 8GB, GPU: NVIDIA GTX 970 / AMD R9 390", trailer:"https://www.youtube.com/embed/-cSFPIwMEq4", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/ss_3.jpg"], website:"https://www.dota2.com/" },
+      { id:11, title:"The Witcher 3", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg", description:"An open-world classic with excellent quests, memorable characters, and a massive story campaign.", rating:9.8, price:9.99, originalPrice:39.99, steam:"https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/", badge:"sale", developer:"CD Projekt Red", publisher:"CD Projekt Red", releaseDate:"May 19, 2015", minRequirements:"OS: Windows 7 64-bit, CPU: Intel i5-2500K / AMD Phenom II X4 940, RAM: 6GB, GPU: NVIDIA GTX 660 / AMD Radeon HD 7870", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-3770 / AMD FX-8350, RAM: 8GB, GPU: NVIDIA GTX 770 / AMD R9 290", trailer:"https://www.youtube.com/embed/c0i88t0Kacs", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/292030/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/292030/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/292030/ss_3.jpg"], website:"https://www.thewitcher.com/" },
+      { id:12, title:"Deep Rock Galactic", genre:"Shooter", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/548430/header.jpg", description:"A co-op mining shooter built around teamwork, destructible caves, and a lot of dwarven chaos.", rating:9.3, price:29.99, steam:"https://store.steampowered.com/app/548430/Deep_Rock_Galactic/", badge:"hot", developer:"Ghost Ship Games", publisher:"Coffee Stain Publishing", releaseDate:"May 13, 2020", minRequirements:"OS: Windows 7 64-bit, CPU: Intel i5-2500K / AMD FX-6300, RAM: 4GB, GPU: NVIDIA GTX 660 / AMD Radeon HD 7870", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-4790 / AMD Ryzen 5 1600, RAM: 8GB, GPU: NVIDIA GTX 970 / AMD RX 580", trailer:"https://www.youtube.com/embed/UkRapj2X-fk", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/548430/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/548430/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/548430/ss_3.jpg"], website:"https://deeprockgalactic.com/" },
+      { id:13, title:"Starfield", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1716740/header.jpg", description:"A spacefaring RPG focused on exploration, faction choices, and building your own sci-fi journey.", rating:8.1, price:39.99, steam:"https://store.steampowered.com/app/1716740/Starfield/", badge:"new", developer:"Bethesda Game Studios", publisher:"Bethesda Softworks", releaseDate:"September 6, 2023", minRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-6800K / AMD Ryzen 5 2600X, RAM: 16GB, GPU: NVIDIA GTX 1070 Ti / AMD RX 5700", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-8700K / AMD Ryzen 5 3600X, RAM: 32GB, GPU: NVIDIA RTX 2080 / AMD RX 6800 XT", trailer:"https://www.youtube.com/embed/1JvJ8WqUxCY", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1716740/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1716740/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1716740/ss_3.jpg"], website:"https://starfieldgame.com/" },
+      { id:14, title:"Terraria", genre:"Indie", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg", description:"A vast sandbox adventure packed with crafting, boss fights, exploration, and endless creativity.", rating:9.6, price:9.99, steam:"https://store.steampowered.com/app/105600/Terraria/", badge:null, developer:"Re-Logic", publisher:"Re-Logic", releaseDate:"May 16, 2011", minRequirements:"OS: Windows XP, CPU: Intel Pentium 4 1.6GHz / AMD Athlon XP 1.6GHz, RAM: 512MB, GPU: 128MB VRAM", recRequirements:"OS: Windows 7, CPU: Intel Core 2 Duo / AMD Athlon X2, RAM: 2GB, GPU: 256MB VRAM", trailer:"https://www.youtube.com/embed/w7Rr4wWcdfQ", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/105600/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/105600/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/105600/ss_3.jpg"], website:"https://terraria.org/" },
+      { id:15, title:"PUBG: BATTLEGROUNDS", genre:"Shooter", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/578080/header.jpg", description:"The battle royale that helped define the genre, offering tense survival matches and tactical gunfights.", rating:8.0, price:null, steam:"https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/", badge:"free", developer:"KRAFTON", publisher:"KRAFTON", releaseDate:"December 21, 2017", minRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-4430 / AMD FX-6300, RAM: 8GB, GPU: NVIDIA GTX 960 / AMD R7 370", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-6600K / AMD Ryzen 5 1600, RAM: 16GB, GPU: NVIDIA GTX 1060 / AMD RX 580", trailer:"https://www.youtube.com/embed/2cQjV4yR-Vg", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/578080/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/578080/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/578080/ss_3.jpg"], website:"https://pubg.com/" },
+      { id:16, title:"Sekiro: Shadows Die Twice", genre:"Action", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/814380/header.jpg", description:"A tightly designed action game centered on timing, posture combat, and punishing precision.", rating:9.4, price:59.99, steam:"https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice/", badge:null, developer:"FromSoftware", publisher:"Activision", releaseDate:"March 22, 2019", minRequirements:"OS: Windows 7 64-bit, CPU: Intel i3-2100 / AMD FX-6300, RAM: 4GB, GPU: NVIDIA GTX 760 / AMD Radeon HD 7950", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-2500K / AMD Ryzen 5 1400, RAM: 8GB, GPU: NVIDIA GTX 970 / AMD RX 570", trailer:"https://www.youtube.com/embed/rXMX4YJ7Lks", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/814380/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/814380/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/814380/ss_3.jpg"], website:"https://www.sekirothegame.com/" },
+      { id:17, title:"Total War: WARHAMMER III", genre:"Strategy", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1142710/header.jpg", description:"A grand strategy and real-time warfare hybrid with huge armies, magic, and fantasy domination.", rating:8.9, price:19.99, originalPrice:59.99, steam:"https://store.steampowered.com/app/1142710/Total_War_WARHAMMER_III/", badge:"sale", developer:"Creative Assembly", publisher:"SEGA", releaseDate:"February 17, 2022", minRequirements:"OS: Windows 7 64-bit, CPU: Intel i3-2100 / AMD FX-6300, RAM: 6GB, GPU: NVIDIA GTX 660 / AMD Radeon HD 7850", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-6600 / AMD Ryzen 5 2600X, RAM: 8GB, GPU: NVIDIA GTX 970 / AMD R9 390X", trailer:"https://www.youtube.com/embed/1bhrgMS2eUw", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1142710/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1142710/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1142710/ss_3.jpg"], website:"https://www.totalwar.com/" },
+      { id:18, title:"Celeste", genre:"Indie", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/504230/header.jpg", description:"A precision platformer with tight controls, emotional storytelling, and challenging climbing stages.", rating:9.5, price:19.99, steam:"https://store.steampowered.com/app/504230/Celeste/", badge:null, developer:"Maddy Makes Games", publisher:"Maddy Makes Games", releaseDate:"January 25, 2018", minRequirements:"OS: Windows 7, CPU: Intel i3-2100 / AMD Phenom II X4, RAM: 2GB, GPU: Intel HD Graphics 4000", recRequirements:"OS: Windows 10, CPU: Intel i5-2500K / AMD FX-8350, RAM: 4GB, GPU: NVIDIA GTX 560 / AMD Radeon HD 6870", trailer:"https://www.youtube.com/embed/70d9irlxiB4", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/504230/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/504230/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/504230/ss_3.jpg"], website:"https://celestegame.com/" },
+      { id:19, title:"Forza Horizon 5", genre:"Racing", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg", description:"An open-world racing showcase with hundreds of cars, beautiful locations, and accessible speed.", rating:9.1, price:59.99, steam:"https://store.steampowered.com/app/1551360/Forza_Horizon_5/", badge:"new", developer:"Playground Games", publisher:"Xbox Game Studios", releaseDate:"November 9, 2021", minRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-4460 / AMD Ryzen 3 1200, RAM: 8GB, GPU: NVIDIA GTX 970 / AMD RX 470", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i7-10700K / AMD Ryzen 7 3800XT, RAM: 16GB, GPU: NVIDIA RTX 2070 / AMD RX 5700 XT", trailer:"https://www.youtube.com/embed/FYH9n37B7Yw", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1551360/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1551360/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1551360/ss_3.jpg"], website:"https://forza.net/horizon" },
+      { id:20, title:"Path of Exile", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/238960/header.jpg", description:"A deep free-to-play action RPG with enormous build variety, seasonal leagues, and a massive endgame.", rating:8.8, price:null, steam:"https://store.steampowered.com/app/238960/Path_of_Exile/", badge:"free", developer:"Grinding Gear Games", publisher:"Grinding Gear Games", releaseDate:"October 23, 2013", minRequirements:"OS: Windows 7 SP1, CPU: Intel i3-530 / AMD Phenom II X4, RAM: 4GB, GPU: NVIDIA GTX 650 / AMD Radeon HD 7750", recRequirements:"OS: Windows 10 64-bit, CPU: Intel i5-6500 / AMD Ryzen 3 1200, RAM: 8GB, GPU: NVIDIA GTX 1050 Ti / AMD RX 560", trailer:"https://www.youtube.com/embed/9y6r_c2_jto", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/238960/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/238960/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/238960/ss_3.jpg"], website:"https://www.pathofexile.com/" }
     ];
 
     let currentGenre = 'all';
     let searchQuery = '';
     let toastTimer = null;
-    let modalGame = null;
 
-    // ---- Defensive helpers ----
-    // Sanitize the source data once so a single malformed game object can never
-    // break rendering anywhere else in the app.
     const FALLBACK_IMG = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="100%25" height="100%25" fill="%23141728"/%3E%3Ctext x="50%25" y="50%25" fill="%234a5270" font-size="14" text-anchor="middle" dominant-baseline="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
 
     function sanitizeGames(list) {
@@ -1219,15 +1077,21 @@
         price: (g.price === null || g.price === undefined) ? null : (typeof g.price === 'number' ? g.price : Number(g.price) || 0),
         originalPrice: typeof g.originalPrice === 'number' ? g.originalPrice : null,
         steam: typeof g.steam === 'string' && g.steam ? g.steam : '#',
-        badge: g.badge || null
+        badge: g.badge || null,
+        developer: typeof g.developer === 'string' ? g.developer : '',
+        publisher: typeof g.publisher === 'string' ? g.publisher : '',
+        releaseDate: typeof g.releaseDate === 'string' ? g.releaseDate : '',
+        minRequirements: typeof g.minRequirements === 'string' ? g.minRequirements : '',
+        recRequirements: typeof g.recRequirements === 'string' ? g.recRequirements : '',
+        trailer: typeof g.trailer === 'string' ? g.trailer : '',
+        screenshots: Array.isArray(g.screenshots) ? g.screenshots : [],
+        website: typeof g.website === 'string' ? g.website : ''
       }));
     }
 
-    const SAFE_GAMES = sanitizeGames(typeof GAMES !== 'undefined' ? GAMES : []);
+    const SAFE_GAMES = sanitizeGames(GAMES);
 
-    function $id(id) {
-      return document.getElementById(id);
-    }
+    function $id(id) { return document.getElementById(id); }
 
     function setText(id, text) {
       const el = $id(id);
@@ -1277,7 +1141,8 @@
       if (!g) return '';
       const rating = typeof g.rating === 'number' ? g.rating : 0;
       const title = escapeHtml(g.title);
-      return '<div class="game-card" data-genre="' + escapeHtml(g.genre) + '" data-id="' + g.id + '" onclick="openGameModal(' + g.id + ')">' +
+      return '<a href="game-detail.html?id=' + g.id + '" class="game-card-link">' +
+        '<div class="game-card" data-genre="' + escapeHtml(g.genre) + '" data-id="' + g.id + '">' +
         '<div class="card-art">' +
           '<img src="' + escapeHtml(g.image) + '" alt="' + title + ' cover" onerror="this.onerror=null;this.src=\'' + FALLBACK_IMG + '\';">' +
           badgeHtml(g.badge) +
@@ -1290,11 +1155,11 @@
             '<div class="card-rating"><span class="star">★</span> ' + rating.toFixed(1) + '</div>' +
             priceHtml(g) +
           '</div>' +
-          '<a href="' + escapeHtml(g.steam) + '" target="_blank" rel="noopener" class="btn-steam" onclick="event.stopPropagation();toast(\'Opening ' + title.replace(/'/g, "\\'") + ' on Steam\')">' +
+          '<div class="btn-steam" onclick="event.preventDefault();event.stopPropagation();toast(\'Opening ' + title.replace(/'/g, "\\'") + ' on Steam\');window.open(\'' + escapeHtml(g.steam) + '\',\'_blank\',\'noopener\')">' +
             'View on Steam <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>' +
-          '</a>' +
+          '</div>' +
         '</div>' +
-      '</div>';
+      '</div></a>';
     }
 
     function getFilteredGames() {
@@ -1421,38 +1286,6 @@
       el.classList.remove('open');
     }
 
-    function openGameModal(id) {
-      const game = findGame(id);
-      if (!game) return;
-      modalGame = game;
-      setImg('modalCover', game.image, game.title + ' cover');
-      setText('modalTitle', game.title);
-      setText('modalGenre', game.genre);
-      setText('modalRating', '★ ' + (game.rating || 0).toFixed(1));
-      setText('modalPrice', game.price === null || game.price === undefined ? 'FREE' : '$' + game.price.toFixed(2));
-      setText('modalDesc', game.description);
-      const steamBtn = $id('modalSteamBtn');
-      if (steamBtn) steamBtn.onclick = function() { openSteam(game.steam); };
-      const backdrop = $id('gameModalBackdrop');
-      if (backdrop) backdrop.classList.add('show');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeGameModal(e) {
-      if (e && e.target !== e.currentTarget) return;
-      const backdrop = $id('gameModalBackdrop');
-      if (backdrop) backdrop.classList.remove('show');
-      document.body.style.overflow = '';
-      modalGame = null;
-    }
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeGameModal();
-        closeMobile();
-      }
-    });
-
     function initHero() {
       if (!Array.isArray(SAFE_GAMES) || SAFE_GAMES.length === 0) return;
 
@@ -1513,14 +1346,10 @@
       } catch (err) {
         console.error('Failed to attach search listener:', err);
       }
-      // No matter what happens above, the loading overlay must always disappear.
       setTimeout(hideLoadingScreen, 450);
     }
 
     init();
-  </script>
-  <script>
-    CLARITY_PLACEHOLDER
   </script>
 </body>
 </html>
