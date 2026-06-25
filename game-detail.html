@@ -367,6 +367,8 @@
       border:1px solid var(--rim);
       transition:transform .25s var(--ease),border-color .25s;
       background:var(--card);
+      cursor:pointer;
+      position:relative;
     }
     .screenshot-item:hover { transform:scale(1.02); border-color:var(--cyan); }
     .screenshot-item img {
@@ -375,15 +377,50 @@
       object-fit:cover;
       display:block;
     }
-    .screenshot-item .no-img {
+    .screenshot-item .skeleton {
+      width:100%;
       height:200px;
-      display:flex;
+      background:linear-gradient(90deg, var(--card) 25%, var(--surface) 50%, var(--card) 75%);
+      background-size:200% 100%;
+      animation:shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position:200% 0; }
+      100% { background-position:-200% 0; }
+    }
+
+    .lightbox-overlay {
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.92);
+      z-index:20000;
+      display:none;
       align-items:center;
       justify-content:center;
-      color:var(--t3);
-      font-size:14px;
-      background:var(--card);
+      cursor:pointer;
+      padding:40px;
     }
+    .lightbox-overlay.active { display:flex; }
+    .lightbox-overlay img {
+      max-width:90%;
+      max-height:90%;
+      object-fit:contain;
+      border-radius:8px;
+      border:1px solid var(--rim2);
+      box-shadow:0 20px 80px rgba(0,0,0,.8);
+    }
+    .lightbox-overlay .close-lightbox {
+      position:absolute;
+      top:24px;
+      right:32px;
+      font-size:32px;
+      color:var(--t2);
+      cursor:pointer;
+      transition:color .2s;
+      background:none;
+      border:none;
+    }
+    .lightbox-overlay .close-lightbox:hover { color:var(--t1); }
 
     .toast {
       position:fixed;
@@ -627,6 +664,11 @@
 
   <div class="toast" id="toast"><span id="toastMsg">Opening Steam</span></div>
 
+  <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+    <button class="close-lightbox" onclick="closeLightbox()">&times;</button>
+    <img id="lightboxImg" src="" alt="Screenshot enlarged">
+  </div>
+
   <script>
     // ========== GAME DATA (self-contained) ==========
     const GAMES = [
@@ -696,6 +738,32 @@
       if (el) el.classList.remove('open');
     }
 
+    // Lightbox
+    function openLightbox(src) {
+      const overlay = document.getElementById('lightboxOverlay');
+      const img = document.getElementById('lightboxImg');
+      if (!overlay || !img) return;
+      img.src = src;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const overlay = document.getElementById('lightboxOverlay');
+      if (!overlay) return;
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close lightbox on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLightbox();
+        const drawer = document.getElementById('mobileDrawer');
+        if (drawer) drawer.classList.remove('open');
+      }
+    });
+
     // ========== MEDIA HANDLING ==========
     function detectTrailerAvailability(trailerUrl, onResult) {
       if (!trailerUrl) {
@@ -703,13 +771,11 @@
         return;
       }
 
-      // Check if it's a valid YouTube embed URL
       if (!trailerUrl.includes('youtube.com/embed/') && !trailerUrl.includes('youtu.be/')) {
         onResult(false);
         return;
       }
 
-      // Create a hidden iframe to test loading
       const testIframe = document.createElement('iframe');
       testIframe.style.display = 'none';
       testIframe.src = trailerUrl;
@@ -723,7 +789,6 @@
       testIframe.onload = function() {
         clearTimeout(timeoutId);
         testIframe.remove();
-        // If it loaded, it's likely available
         onResult(true);
       };
 
@@ -736,15 +801,19 @@
       document.body.appendChild(testIframe);
     }
 
-    function renderScreenshots(screenshots) {
-      if (!screenshots || screenshots.length === 0) {
-        return '<div class="screenshot-item"><div class="no-img">No screenshots available</div></div>';
-      }
+    function renderScreenshotItem(src, coverImage) {
+      return '<div class="screenshot-item" onclick="openLightbox(\'' + escapeHtml(src) + '\')">' +
+        '<div class="skeleton"></div>' +
+        '<img src="' + escapeHtml(src) + '" alt="Screenshot" loading="lazy" style="display:none;" onload="this.style.display=\'block\';this.previousElementSibling.style.display=\'none\'" onerror="this.style.display=\'none\';this.previousElementSibling.style.display=\'none\'">' +
+        '</div>';
+    }
 
+    function renderScreenshots(screenshots, coverImage) {
+      if (!screenshots || screenshots.length === 0) {
+        return '';
+      }
       return screenshots.map(function(src) {
-        return '<div class="screenshot-item">' +
-          '<img src="' + escapeHtml(src) + '" alt="Screenshot" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=\\"no-img\\">Image unavailable</div>\'">' +
-          '</div>';
+        return renderScreenshotItem(src, coverImage);
       }).join('');
     }
 
@@ -779,7 +848,8 @@
           ? '<a href="' + escapeHtml(game.website) + '" target="_blank" rel="noopener" class="btn-secondary">Official Website</a>'
           : '';
 
-        // Build the main content first
+        var screenshotsHtml = renderScreenshots(game.screenshots, game.image);
+
         var html = `
           <section class="detail-hero">
             <div class="detail-hero-inner">
@@ -827,7 +897,7 @@
               <div id="screenshotsContainer" style="display:none;">
                 <h2 class="detail-section-title">📸 Screenshots</h2>
                 <div class="screenshots-grid" id="screenshotsGrid">
-                  ${renderScreenshots(game.screenshots)}
+                  ${screenshotsHtml}
                 </div>
               </div>
             </div>
@@ -852,43 +922,42 @@
 
         if (container) container.innerHTML = html;
 
-        // Now handle the media section with trailer detection
+        // Handle media section
         var trailerContainer = document.getElementById('trailerContainer');
         var screenshotsContainer = document.getElementById('screenshotsContainer');
         var trailerContent = document.getElementById('trailerContent');
 
         if (game.trailer) {
-          // Test if trailer is available
           detectTrailerAvailability(game.trailer, function(available) {
             if (available) {
-              // Show trailer
               if (trailerContent) {
                 trailerContent.innerHTML = '<iframe src="' + escapeHtml(game.trailer) + '" allowfullscreen loading="lazy"></iframe>';
               }
               if (screenshotsContainer) {
-                screenshotsContainer.style.display = 'none';
+                screenshotsContainer.style.display = 'block';
+                var grid = document.getElementById('screenshotsGrid');
+                if (grid) {
+                  grid.innerHTML = renderScreenshots(game.screenshots, game.image);
+                }
               }
               if (trailerContainer) {
                 trailerContainer.style.display = 'block';
               }
             } else {
-              // Trailer failed - show screenshots
               if (trailerContainer) {
                 trailerContainer.style.display = 'none';
               }
               if (screenshotsContainer) {
                 screenshotsContainer.style.display = 'block';
-                // Re-render screenshots in case they need to be refreshed
                 var grid = document.getElementById('screenshotsGrid');
                 if (grid) {
-                  grid.innerHTML = renderScreenshots(game.screenshots);
+                  grid.innerHTML = renderScreenshots(game.screenshots, game.image);
                 }
               }
             }
             if (loadingWrap) loadingWrap.classList.add('hide');
           });
         } else {
-          // No trailer URL - show screenshots directly
           if (trailerContainer) {
             trailerContainer.style.display = 'none';
           }
@@ -896,7 +965,7 @@
             screenshotsContainer.style.display = 'block';
             var grid = document.getElementById('screenshotsGrid');
             if (grid) {
-              grid.innerHTML = renderScreenshots(game.screenshots);
+              grid.innerHTML = renderScreenshots(game.screenshots, game.image);
             }
           }
           if (loadingWrap) loadingWrap.classList.add('hide');
@@ -921,13 +990,6 @@
     // ========== INIT ==========
     document.addEventListener('DOMContentLoaded', function() {
       renderGame();
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        var drawer = document.getElementById('mobileDrawer');
-        if (drawer) drawer.classList.remove('open');
-      }
     });
 
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
