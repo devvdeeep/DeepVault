@@ -377,17 +377,6 @@
       object-fit:cover;
       display:block;
     }
-    .screenshot-item .skeleton {
-      width:100%;
-      height:200px;
-      background:linear-gradient(90deg, var(--card) 25%, var(--surface) 50%, var(--card) 75%);
-      background-size:200% 100%;
-      animation:shimmer 1.5s infinite;
-    }
-    @keyframes shimmer {
-      0% { background-position:200% 0; }
-      100% { background-position:-200% 0; }
-    }
 
     .lightbox-overlay {
       position:fixed;
@@ -499,13 +488,6 @@
       margin-bottom:16px;
     }
     .not-found p { color:var(--t2); font-size:18px; }
-
-    .media-section {
-      display:block;
-    }
-    .media-section.hidden {
-      display:none;
-    }
 
     footer {
       background:var(--deep);
@@ -670,7 +652,7 @@
   </div>
 
   <script>
-    // ========== GAME DATA (self-contained) ==========
+    // ========== GAME DATA WITH WORKING SCREENSHOTS ==========
     const GAMES = [
       { id:1, title:"Baldur's Gate 3", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/header.jpg", description:"A massive fantasy RPG with reactive storytelling, tactical combat, and near-limitless player choice.", rating:9.9, price:59.99, steam:"https://store.steampowered.com/app/1086940/Baldurs_Gate_3/", badge:"hot", developer:"Larian Studios", publisher:"Larian Studios", releaseDate:"August 3, 2023", minRequirements:"OS: Windows 10 64-bit\nCPU: Intel i5-4690 / AMD FX 8350\nRAM: 8GB\nGPU: NVIDIA GTX 970 / AMD RX 480", recRequirements:"OS: Windows 10 64-bit\nCPU: Intel i7-8700K / AMD Ryzen 5 3600\nRAM: 16GB\nGPU: NVIDIA RTX 2060 / AMD RX 5700 XT", trailer:"https://www.youtube.com/embed/GtT2r9gXeGQ", website:"https://baldursgate3.game/", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/ss_3.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/ss_4.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/ss_5.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/ss_6.jpg"] },
       { id:2, title:"Cyberpunk 2077", genre:"RPG", image:"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg", description:"A neon-soaked open-world RPG set in Night City, featuring story-rich quests and sharp first-person action.", rating:9.2, price:29.99, originalPrice:59.99, steam:"https://store.steampowered.com/app/1091500/Cyberpunk_2077/", badge:"sale", developer:"CD Projekt Red", publisher:"CD Projekt Red", releaseDate:"December 10, 2020", minRequirements:"OS: Windows 10 64-bit\nCPU: Intel i5-3570K / AMD FX-8310\nRAM: 8GB\nGPU: NVIDIA GTX 780 / AMD RX 470", recRequirements:"OS: Windows 10 64-bit\nCPU: Intel i7-4790 / AMD Ryzen 3 3200G\nRAM: 12GB\nGPU: NVIDIA GTX 1060 / AMD RX 580", trailer:"https://www.youtube.com/embed/qIcTM8WXFjk", website:"https://www.cyberpunk.net/", screenshots:["https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/ss_1.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/ss_2.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/ss_3.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/ss_4.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/ss_5.jpg","https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/ss_6.jpg"] },
@@ -738,7 +720,6 @@
       if (el) el.classList.remove('open');
     }
 
-    // Lightbox
     function openLightbox(src) {
       const overlay = document.getElementById('lightboxOverlay');
       const img = document.getElementById('lightboxImg');
@@ -755,7 +736,6 @@
       document.body.style.overflow = '';
     }
 
-    // Close lightbox on Escape key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeLightbox();
@@ -770,50 +750,43 @@
         onResult(false);
         return;
       }
-
       if (!trailerUrl.includes('youtube.com/embed/') && !trailerUrl.includes('youtu.be/')) {
         onResult(false);
         return;
       }
-
       const testIframe = document.createElement('iframe');
       testIframe.style.display = 'none';
       testIframe.src = trailerUrl;
       testIframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
-
       let timeoutId = setTimeout(function() {
         testIframe.remove();
         onResult(false);
       }, 8000);
-
       testIframe.onload = function() {
         clearTimeout(timeoutId);
         testIframe.remove();
         onResult(true);
       };
-
       testIframe.onerror = function() {
         clearTimeout(timeoutId);
         testIframe.remove();
         onResult(false);
       };
-
       document.body.appendChild(testIframe);
     }
 
-    function renderScreenshotItem(src, coverImage) {
+    function renderScreenshotItem(src) {
       return '<div class="screenshot-item" onclick="openLightbox(\'' + escapeHtml(src) + '\')">' +
-        '<div class="skeleton"></div>' +
-        '<img src="' + escapeHtml(src) + '" alt="Screenshot" loading="lazy" style="display:none;" onload="this.style.display=\'block\';this.previousElementSibling.style.display=\'none\'" onerror="this.style.display=\'none\';this.previousElementSibling.style.display=\'none\'">' +
+        '<img src="' + escapeHtml(src) + '" alt="Screenshot" loading="lazy" onerror="this.style.display=\'none\'">' +
         '</div>';
     }
 
-    function renderScreenshots(screenshots, coverImage) {
+    function renderScreenshots(screenshots) {
       if (!screenshots || screenshots.length === 0) {
         return '';
       }
       return screenshots.map(function(src) {
-        return renderScreenshotItem(src, coverImage);
+        return renderScreenshotItem(src);
       }).join('');
     }
 
@@ -848,7 +821,7 @@
           ? '<a href="' + escapeHtml(game.website) + '" target="_blank" rel="noopener" class="btn-secondary">Official Website</a>'
           : '';
 
-        var screenshotsHtml = renderScreenshots(game.screenshots, game.image);
+        var screenshotsHtml = renderScreenshots(game.screenshots);
 
         var html = `
           <section class="detail-hero">
@@ -922,7 +895,6 @@
 
         if (container) container.innerHTML = html;
 
-        // Handle media section
         var trailerContainer = document.getElementById('trailerContainer');
         var screenshotsContainer = document.getElementById('screenshotsContainer');
         var trailerContent = document.getElementById('trailerContent');
@@ -937,7 +909,7 @@
                 screenshotsContainer.style.display = 'block';
                 var grid = document.getElementById('screenshotsGrid');
                 if (grid) {
-                  grid.innerHTML = renderScreenshots(game.screenshots, game.image);
+                  grid.innerHTML = renderScreenshots(game.screenshots);
                 }
               }
               if (trailerContainer) {
@@ -951,7 +923,7 @@
                 screenshotsContainer.style.display = 'block';
                 var grid = document.getElementById('screenshotsGrid');
                 if (grid) {
-                  grid.innerHTML = renderScreenshots(game.screenshots, game.image);
+                  grid.innerHTML = renderScreenshots(game.screenshots);
                 }
               }
             }
@@ -965,7 +937,7 @@
             screenshotsContainer.style.display = 'block';
             var grid = document.getElementById('screenshotsGrid');
             if (grid) {
-              grid.innerHTML = renderScreenshots(game.screenshots, game.image);
+              grid.innerHTML = renderScreenshots(game.screenshots);
             }
           }
           if (loadingWrap) loadingWrap.classList.add('hide');
@@ -987,7 +959,6 @@
       }
     }
 
-    // ========== INIT ==========
     document.addEventListener('DOMContentLoaded', function() {
       renderGame();
     });
